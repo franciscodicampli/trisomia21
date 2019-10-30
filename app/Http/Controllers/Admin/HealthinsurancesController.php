@@ -10,13 +10,11 @@ use App\Http\Requests\UpdateHealthinsurance;
 
 class HealthinsurancesController extends Controller
 {
-
     public function index()
     {
         $obrassociales = Healthinsurance::all();
         return view('admin.obrassociales.index', compact('obrassociales'));
     }
-
 
     public function create()
     {
@@ -26,7 +24,6 @@ class HealthinsurancesController extends Controller
     public function store(StoreHealthinsurance $request)
     {
         $validated = $request->validated();
-
         $obrasocial = Healthinsurance::create($request->all());
         return redirect()->route('obrassociales.index');
     }
@@ -45,7 +42,6 @@ class HealthinsurancesController extends Controller
     public function update(UpdateHealthinsurance $request, $id)
     {
         $validated = $request->validated();
-
         $obrasocial = Healthinsurance::find($id);
         $obrasocial->update($request->all());
         return redirect()->route('obrassociales.index');
@@ -55,7 +51,6 @@ class HealthinsurancesController extends Controller
     {
         $obrasocial = Healthinsurance::find($id);
         $obrasocial->delete();
-
         return redirect()->route('obrassociales.index');
     }
 }
