@@ -40,6 +40,9 @@ Route::resource('censado', 'Admin\RegisteredsController');
 //Ruta de recursos para Tutores
 Route::resource('tutor', 'Admin\TutorsController');
 
+//Ruta ir a vercensado con id de tutor y el id de censado
+Route::get('tutor/{tutor}/{censado}', 'Admin\TutorsController@show')->name('tutor.show');
+
 //Ruta de recursos para Voluntarios
 Route::resource('voluntario', 'Admin\VolunteersController');
 

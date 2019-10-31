@@ -14,6 +14,7 @@ use App\Registered;
 use App\Healthinsurance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Residence;
 
 class RegisteredsController extends Controller
 {
@@ -50,7 +51,9 @@ class RegisteredsController extends Controller
 
         $treatments = Treatment::all();
 
-        return view('admin.censo.crearcensado', compact('localidades', 'schoolings', 'healthinsurances', 'pensions', 'pathologies', 'treatments'));
+        $residences = Residence::all();
+
+        return view('admin.censo.crearcensado', compact('localidades', 'schoolings', 'healthinsurances', 'pensions', 'pathologies', 'treatments', 'residences'));
     }
 
     /**
@@ -101,8 +104,7 @@ class RegisteredsController extends Controller
         //tratamiento
         $censado->treatments()->attach($request->tratamiento);
 
-
-        return view('home');
+        return redirect()->route('censado.show', $censado->id);
     }
 
     /**
@@ -115,9 +117,13 @@ class RegisteredsController extends Controller
     {
         $registered = Registered::find($id);
 
-        $tutors = Tutor::all();
+        $tutors = Registered::with('tutors')->find($id); //manda solo los tutores de ese censado
 
-        return view('admin.censo.vercensado', compact('registered', 'tutors'));
+        $localidades = Location::all();
+
+        $healthinsurances = Healthinsurance::all();
+
+        return view('admin.censo.vercensado', compact('registered', 'tutors', 'localidades', 'healthinsurances'));
     }
 
     /**
